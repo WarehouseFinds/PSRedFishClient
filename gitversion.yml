@@ -28,16 +28,3 @@ branches:
     is-release-branch: true
     is-main-branch: false
     pre-release-weight: 55000
-  pull-request:
-    mode: ContinuousDelivery
-    label: PullRequest{Number}
-    increment: Inherit
-    prevent-increment:
-      of-merged-branch: true
-      when-current-commit-tagged: false
-    regex: ^(pull-requests|pull|pr)[\/-](?<Number>\d*)
-    source-branches:
-    - main
-    - feature
-    - hotfix
-    pre-release-weight: 30000
