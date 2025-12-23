@@ -2,16 +2,40 @@ major-version-bump-message: '\s?(breaking|major|breaking\schange)'
 minor-version-bump-message: '(adds?|features?|minor)\b'
 patch-version-bump-message: '\s?(fix|patch)'
 no-bump-message: '\+semver:\s?(none|skip)'
+tag-prefix: '[vV]?'
+tag-pre-release-weight: 60000
 branches:
   main:
     label: stable
     increment: Patch
     regex: ^master$|^main$
+    is-release-branch: true
+    is-main-branch: true
+    pre-release-weight: 55000
   feature:
     label: feature
     increment: Minor
     regex: ^features?[/-]
+    is-release-branch: false
+    is-main-branch: false
+    pre-release-weight: 30000
   hotfix:
     label: preview
     increment: Patch
     regex: ^hotfix(es)?[/-]|^patch?[/-]
+    is-release-branch: true
+    is-main-branch: false
+    pre-release-weight: 55000
+  pull-request:
+    mode: ContinuousDelivery
+    label: PullRequest{Number}
+    increment: Inherit
+    prevent-increment:
+      of-merged-branch: true
+      when-current-commit-tagged: false
+    regex: ^(pull-requests|pull|pr)[\/-](?<Number>\d*)
+    source-branches:
+    - main
+    - feature
+    - hotfix
+    pre-release-weight: 30000
