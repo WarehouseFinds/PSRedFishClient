@@ -211,7 +211,8 @@ task Build {
 
     # Create versioned output folder
     if (-not (Test-Path $buildOutputPath)) {
-        New-Item -Path $buildOutputPath -ItemType Directory
+        Write-Warning "Creating build output folder at '$buildOutputPath'"
+        [void] (New-Item -Path $buildOutputPath -ItemType Directory)
     }
 
     # Copy-Item parameters
