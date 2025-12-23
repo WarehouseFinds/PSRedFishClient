@@ -41,6 +41,7 @@ jobs:
       - name: Run build via Invoke-Build
         shell: pwsh
         run: |
+          $VerbosePreference = 'Continue'
           Set-StrictMode -Version Latest
           Import-Module InvokeBuild -ErrorAction Stop
           # Run the repository build script using Invoke-Build; the script defines tasks
