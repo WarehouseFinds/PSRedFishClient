@@ -46,9 +46,6 @@ Enter-Build {
 
     # Setting base module version and using it if building locally
     $script:newModuleVersion = New-Object -TypeName 'System.Version' -ArgumentList (0, 0, 1)
-
-    # Setting the list of functions ot be exported by module
-    $script:functionsToExport = (Test-ModuleManifest $moduleManifestPath).ExportedFunctions
 }
 
 # Synopsis: Analyze the project with PSScriptAnalyzer
