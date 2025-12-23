@@ -57,7 +57,7 @@ task Analyze {
     $TestFiles = Get-ChildItem -Path $moduleSourcePath -Recurse -Include "*.PSSATests.*"
     
     $Config = New-PesterConfiguration @{
-        Run = @{
+        Run        = @{
             Path = $TestFiles
             Exit = $true
         }
@@ -86,7 +86,7 @@ task Test {
     $TestFiles = Get-ChildItem -Path $moduleSourcePath -Recurse -Include "*.Tests.*"
     
     $Config = New-PesterConfiguration @{
-        Run = @{
+        Run        = @{
             Path = $TestFiles
             Exit = $true
         }
@@ -229,7 +229,7 @@ task UpdatePackageSpecification GenerateNewModuleVersion, {
 task Build UpdateModuleManifest, UpdatePackageSpecification, {
     # Warning on local builds
     if ($Configuration -eq 'Debug') {
-        Write-Warning "Creating a debug build. Use it for test purpose only!"
+        Write-Warning "Creating a debug build. Use it for test purpose only!!!"
     }
 
     # Create versioned output folder
@@ -254,16 +254,16 @@ task Build UpdateModuleManifest, UpdatePackageSpecification, {
 # Synopsis: Verify the code coverage by tests
 task CodeCoverage {
     $files = Get-ChildItem $moduleSourcePath -Dir -Force -Recurse |
-                Where-Object {$_.FullName -notLike '*build*' -and $_.FullName -notLike '*.git*'} |
-                Get-ChildItem -File -Force -Include '*.ps1' -Exclude '*.Tests.ps1' |
-                Select-Object -ExpandProperty FullName
+    Where-Object { $_.FullName -notLike '*build*' -and $_.FullName -notLike '*.git*' } |
+    Get-ChildItem -File -Force -Include '*.ps1' -Exclude '*.Tests.ps1' |
+    Select-Object -ExpandProperty FullName
 
     $Config = New-PesterConfiguration @{
-        Run = @{
+        Run          = @{
             Path     = $moduleSourcePath
             PassThru = $true
         }
-        Output = @{
+        Output       = @{
             Verbosity = 'Normal'
         }
         CodeCoverage = @{
