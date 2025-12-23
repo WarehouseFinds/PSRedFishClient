@@ -18,12 +18,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Ensure PowerShell modules (PSDepend, InvokeBuild, Pester)
+      - name: Ensure PowerShell modules (PSDepend, InvokeBuild, Pester, ModuleBuilder, PSScriptAnalyzer, InjectionHunter) are installed
         shell: pwsh
         run: |
           Set-StrictMode -Version Latest
           Write-Host 'Installing required modules to CurrentUser scope if missing...'
-          $modules = 'PSDepend','InvokeBuild','Pester'
+          $modules = 'PSDepend','InvokeBuild','Pester','ModuleBuilder','PSScriptAnalyzer','InjectionHunter'
           foreach ($m in $modules) {
             if (-not (Get-Module -ListAvailable -Name $m)) {
               Install-Module -Name $m -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop

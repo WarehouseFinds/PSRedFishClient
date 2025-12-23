@@ -6,11 +6,7 @@
     Copyright = '(c) Warehouse Finds'
     Description = 'PowerShell client helpers for Redfish APIs.'
     RootModule = 'PSRedFishClient.psm1'
-    FileList = @('PSRedFishClient.psm1',
-                 'Public\\Connect-Redfish.ps1',
-                 'Public\\Get-RedfishResource.ps1',
-                 'Public\\Invoke-RedfishRequest.ps1')
-    FunctionsToExport = @('Connect-Redfish','Get-RedfishResource','Invoke-RedfishRequest')
+    FunctionsToExport = @()
     CmdletsToExport = @()
     VariablesToExport = @()
     AliasesToExport = @()
@@ -19,7 +15,7 @@
             Tags = @('Redfish','REST','Hardware')
             ProjectUri = ''
             LicenseUri = ''
-            ReleaseNotes = 'Initial scaffold.'
+            ReleaseNotes = ''
         }
     }
     CompatiblePSEditions = @('Core','Desktop')
