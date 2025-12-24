@@ -1,0 +1,1 @@
+@{ Path = "src/PSRedfishClient.psd1" }

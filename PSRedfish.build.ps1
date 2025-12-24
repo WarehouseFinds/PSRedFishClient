@@ -86,7 +86,7 @@ task Test {
     
     $Config = New-PesterConfiguration @{
         Run          = @{
-            Path     = $script:testSourcePath
+            Path     = $Script:testSourcePath
             PassThru = $true
             Exit     = $true
         }
@@ -97,12 +97,7 @@ task Test {
         }
         CodeCoverage = @{
             Enabled        = $true
-            Path           = @(
-                "$script:moduleSourcePath\Classes",
-                "$script:moduleSourcePath\Enums",
-                "$script:moduleSourcePath\Public",
-                "$script:moduleSourcePath\Private"
-            )
+            Path           = $Script:moduleSourcePath
             OutputFormat   = 'Cobertura'
             OutputPath     = "$coverageOutputPath\coverage.xml"
             OutputEncoding = 'UTF8'
@@ -222,7 +217,7 @@ task Build {
 
     # Copy-Item parameters
     Import-Module ModuleBuilder -ErrorAction Stop
-    Build-Module -Path $moduleSourcePath -OutputDirectory $buildOutputPath -ErrorAction Stop
+    Build-Module -Path $BuildRoot -OutputDirectory $buildOutputPath -ErrorAction Stop
 }
 
 # Synopsis: Verify the code coverage by tests
