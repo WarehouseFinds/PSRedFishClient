@@ -5,14 +5,14 @@
     CompanyName       = 'Warehouse Finds'
     Copyright         = '(c) Warehouse Finds'
     Description       = 'A sample PowerShell script module.'
-    #RootModule        = ''
+    RootModule        = ''
     FunctionsToExport = @()
     PrivateData       = @{
         PSData = @{
-            Tags       = @('Redfish', 'REST', 'Hardware')
-            ProjectUri = 'https://github.com/warehousefinds/PSRedfishClient'
-            LicenseUri = 'https://github.com/warehousefinds/PSRedfishClient/LICENSE.md'
-            #ReleaseNotes = ''
+            Tags         = @('Redfish', 'REST', 'Hardware')
+            ProjectUri   = 'https://github.com/warehousefinds/PSRedfishClient'
+            LicenseUri   = 'https://github.com/warehousefinds/PSRedfishClient/LICENSE.md'
+            ReleaseNotes = ''
         }
     }
 }

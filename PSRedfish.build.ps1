@@ -123,7 +123,7 @@ task GenerateNewModuleVersion {
 task UpdateModuleManifest GenerateNewModuleVersion, {
     $Params = @{
         Path          = $moduleManifestPath
-        ModuleVersion = $moduleVersion
+        ModuleVersion = $moduleVersion.ToString()
     }
     [void] (Update-ModuleManifest @Params)
 }
