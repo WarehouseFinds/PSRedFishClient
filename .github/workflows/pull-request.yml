@@ -7,10 +7,10 @@ on:
 jobs:
   build:
     name: Build and Test
-    runs-on: ${{ matrix.os }}
     permissions:
       issues: write
       pull-requests: write
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
