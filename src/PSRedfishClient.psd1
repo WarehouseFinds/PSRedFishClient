@@ -11,7 +11,7 @@
             Tags         = @('Redfish', 'REST', 'Hardware')
             ProjectUri   = 'https://github.com/warehousefinds/PSRedfishClient'
             LicenseUri   = 'https://github.com/warehousefinds/PSRedfishClient/LICENSE.md'
-            ReleaseNotes = ''
+            ReleaseNotes = 'https://github.com/WarehouseFinds/PSRedFishClient/releases'
         }
     }
 }
