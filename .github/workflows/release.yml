@@ -18,6 +18,9 @@ on:
         description: 'Test scenario tags'
         required: false
         type: boolean
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -85,4 +88,4 @@ jobs:
         id: create_tag
         run: |
           git tag v${{ env.SemVer }}
-          git push origin v${{ github.ref_name }} --tags
+          git push origin tag v${{ env.SemVer }}
