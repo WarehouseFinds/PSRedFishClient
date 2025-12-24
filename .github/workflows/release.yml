@@ -52,7 +52,7 @@ jobs:
           configFilePath: gitversion.yml
 
       - run: |
-          echo "SemVer (env.SemVer): ${{ steps.version_step.outputs.SemVer }}"
+          echo "SemVer (env.SemVer): ${{ steps.version_step.outputs.GitVersion_MajorMinorPatch }}"
         name: Display GitVersion variables (without prefix)
 
       - name: Ensure PowerShell modules (PSDepend, InvokeBuild, Pester, ModuleBuilder, PSScriptAnalyzer, InjectionHunter) are installed
@@ -73,7 +73,7 @@ jobs:
           $VerbosePreference = 'Continue'
           Set-StrictMode -Version Latest
           Import-Module InvokeBuild -ErrorAction Stop
-          Invoke-Build -ReleaseType Release -SemanticVersion ${{ steps.version_step.outputs.SemVer }} -Task Build
+          Invoke-Build -ReleaseType Release -SemanticVersion ${{ steps.version_step.outputs.GitVersion_MajorMinorPatch }} -Task Build
 
       - name: Upload build artifacts (if any)
         uses: actions/upload-artifact@v4
@@ -86,5 +86,5 @@ jobs:
       - name: Create Tag
         id: create_tag
         run: |
-          git tag v${{ steps.version_step.outputs.SemVer }}
-          git push origin tag v${{ steps.version_step.outputs.SemVer }}
+          git tag v${{ steps.version_step.outputs.GitVersion_MajorMinorPatch }}
+          git push origin tag v${{ steps.version_step.outputs.GitVersion_MajorMinorPatch }}
