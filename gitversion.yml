@@ -1,4 +1,4 @@
-mode: mainline
+workflow: TrunkBased/preview1
 assembly-versioning-scheme: MajorMinorPatch
 commit-message-incrementing: Enabled
 major-version-bump-message: '\s?(breaking|major|breaking\schange)'
