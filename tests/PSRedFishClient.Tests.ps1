@@ -1,6 +1,6 @@
 Describe 'PSRedFishClient basic' {
     It 'Module file exists' {
-        Test-Path -Path (Resolve-Path "src/PSRedFishClient/PSRedFishClient.psd1") | Should -BeTrue
+        Test-Path -Path (Resolve-Path "src/PSRedFishClient.psd1") | Should -BeTrue
     }
 
     <#     Context 'Functions exported' {
