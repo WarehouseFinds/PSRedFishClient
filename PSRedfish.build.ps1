@@ -40,11 +40,11 @@ Enter-Build {
     # Setting build script variables
     $script:moduleName = 'PSRedfishClient'
     $script:moduleSourcePath = Join-Path -Path $BuildRoot -ChildPath 'src'
-    $script:testSourcePath = Join-Path -Path $BuildRoot -ChildPath 'tests'
     $script:moduleManifestPath = Join-Path -Path $moduleSourcePath -ChildPath "$moduleName.psd1"
+    $script:testSourcePath = Join-Path -Path $BuildRoot -ChildPath 'tests'
     $script:nuspecPath = Join-Path -Path $moduleSourcePath -ChildPath "$moduleName.nuspec"
     $script:buildOutputPath = Join-Path -Path $BuildRoot -ChildPath 'build'
-    $script:coverageOutputPath = Join-Path -Path $buildOutputPath -ChildPath 'coverage'
+    $script:coverageOutputPath = Join-Path -Path $BuildRoot -ChildPath 'coverage'
 
     # Setting base module version and using it if building locally
     $script:newModuleVersion = New-Object -TypeName 'System.Version' -ArgumentList (0, 0, 1)
@@ -82,26 +82,30 @@ task Analyze {
 
 # Synopsis: Test the project with Pester tests
 task Test {
-    $TestFiles = Get-ChildItem -Path $script:testSourcePath -Recurse -Include "*.Tests.*"
+    #$files = Get-ChildItem -Path $moduleSourcePath -Recurse -Force -Include '*.ps1' -Exclude '*.Tests.ps1', '*build.ps1'
     
     $Config = New-PesterConfiguration @{
-        Run        = @{
-            Path = $TestFiles
-            Exit = $true
+        Run          = @{
+            Path     = $Script:testSourcePath
+            PassThru = $true
+            Exit     = $true
         }
-        TestResult = @{
-            Enabled = $true
+        TestResult   = @{
+            Enabled      = $true
+            OutputFormat = 'NUnitXml'
+            OutputPath   = "$coverageOutputPath\testResults.xml"
+        }
+        CodeCoverage = @{
+            Enabled        = $true
+            Path           = $Script:moduleSourcePath
+            OutputFormat   = 'Cobertura'
+            OutputPath     = "$coverageOutputPath\coverage.xml"
+            OutputEncoding = 'UTF8'
         }
     }
 
-    # Additional parameters on Azure Pipelines agents to generate test results
-    $Timestamp = Get-date -UFormat "%Y%m%d-%H%M%S"
-    $PSVersion = $PSVersionTable.PSVersion.Major
-    $TestResultFile = "TestResults_PS$PSVersion`_$TimeStamp.xml"
-    $Config.TestResult.OutputPath = "$coverageOutputPath\$TestResultFile"
-
     # Invoke all tests
-    Invoke-Pester -Configuration $Config
+    Invoke-Pester -Configuration $Config -Verbose
 }
 
 # Synopsis: Generate a new module version if creating a release build
@@ -213,7 +217,7 @@ task Build {
 
     # Copy-Item parameters
     Import-Module ModuleBuilder -ErrorAction Stop
-    Build-Module -Path $moduleSourcePath -OutputDirectory $buildOutputPath -ErrorAction Stop
+    Build-Module -Path $BuildRoot -OutputDirectory $buildOutputPath -ErrorAction Stop
 }
 
 # Synopsis: Verify the code coverage by tests
@@ -225,16 +229,15 @@ task CodeCoverage {
 
     $Config = New-PesterConfiguration @{
         Run          = @{
-            Path     = $moduleSourcePath
+            Path     = $testSourcePath
             PassThru = $true
         }
         Output       = @{
             Verbosity = 'Normal'
         }
         CodeCoverage = @{
-            Enabled               = $true
-            Path                  = $files
-            CoveragePercentTarget = 60
+            Enabled = $true
+            Path    = $files
         }
     }
 
