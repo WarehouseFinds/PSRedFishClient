@@ -10,13 +10,13 @@
 
 [CmdletBinding(DefaultParameterSetName = 'Debug')]
 Param (
-    [Parameter(Mandatory = $true, ParameterSetName = 'Debug', ValueFromPipelineByPropertyName = $true)]
-    [Parameter(Mandatory = $true, ParameterSetName = 'Release', ValueFromPipelineByPropertyName = $true)]
+    [Parameter(ParameterSetName = 'Debug', ValueFromPipelineByPropertyName = $true)]
+    [Parameter(ParameterSetName = 'Release', ValueFromPipelineByPropertyName = $true)]
     [ValidateSet('Debug', 'Release')]
     [String]
     $ReleaseType = 'Debug',
 
-    [Parameter(Mandatory = $true, ParameterSetName = 'Release', ValueFromPipelineByPropertyName = $true)]
+    [Parameter(ParameterSetName = 'Release', ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullOrEmpty()]
     [String]
     $SemanticVersion
