@@ -32,9 +32,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v4.2.0
+        uses: gittools/actions/gitversion/setup@v2
         with:
-          versionSpec: '5.1.12'
+          versionSpec: '5.2.x'
           preferLatestVersion: false
 
       - name: Determine Version
