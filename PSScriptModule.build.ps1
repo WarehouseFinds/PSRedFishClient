@@ -83,12 +83,12 @@ task Analyze {
 # Synopsis: Run Pester tests Unit tests and generate code coverage report
 task UnitTest {
     #$files = Get-ChildItem -Path $moduleSourcePath -Recurse -Force -Include '*.ps1' -Exclude '*.Tests.ps1', '*build.ps1'
-    
-    $Config = New-PesterConfiguration @{
+    $unitContainer = New-PesterContainer -Path $Script:testSourcePath -Data @{ SourcePath = $script:moduleSourcePath }
+    $unitConfig = New-PesterConfiguration @{
         Run          = @{
-            Path     = $Script:testSourcePath
-            PassThru = $true
-            Exit     = $true
+            Container = $unitContainer
+            PassThru  = $true
+            Exit      = $true
         }
         TestResult   = @{
             Enabled      = $true
@@ -103,14 +103,8 @@ task UnitTest {
             OutputEncoding = 'UTF8'
         }
     }
-
     # Invoke all tests
-    $result = Invoke-Pester -Configuration $Config -Verbose
-
-    # Fail the task if the code coverage results are not acceptable
-    if ( $result.CodeCoverage.CoveragePercent -lt $result.CodeCoverage.CoveragePercentTarget) {
-        Write-Warning "The overall code coverage by Pester tests is $("0:0.##" -f $result.CodeCoverage.CoveragePercent)% which is less than quality gate of $($result.CodeCoverage.CoveragePercentTarget)%. Pester ModuleVersion is: $((Get-Module -Name Pester -ListAvailable).Version)."
-    }
+    Invoke-Pester -Configuration $unitConfig -Verbose
 }
 
 # Build the project
