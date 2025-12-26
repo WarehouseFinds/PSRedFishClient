@@ -6,23 +6,26 @@ param(
     [System.IO.DirectoryInfo]
     $SourcePath
 )
+
+BeforeAll {
+    $publicPath = Join-Path -Path $SourcePath -ChildPath 'Public'
+    $privatePath = Join-Path -Path $SourcePath -ChildPath 'Private'
+    
+}
 BeforeDiscovery {
-    # Resolve the module source path
-    <#     if (-not $SourcePath) {
-        $SourcePath = Resolve-Path (Join-Path $PSScriptRoot '..\..\src')
-    } #>
+    if (-not (Test-Path -Path $SourcePath)) {
+        throw "Source path '$SourcePath' does not exist."
+    }
 }
 
 Describe "PSScriptModule Unit Tests" {
 
     It "Have at least 1 Public Function <_>" -Foreach ($SourcePath) {
-        $publicPath = Join-Path -Path $SourcePath -ChildPath 'Public'
         $publicFunctions = Get-ChildItem -Path $publicPath
         $publicFunctions.Count | Should -BeGreaterThan 0
     }
 
     It "Have at least 1 Private Function <_>" -Foreach ($SourcePath) {
-        $privatePath = Join-Path -Path $SourcePath -ChildPath 'Private'
         $privateFunctions = Get-ChildItem -Path $privatePath
         $privateFunctions.Count | Should -BeGreaterThan 0
     }
