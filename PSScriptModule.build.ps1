@@ -25,7 +25,8 @@ Param (
     $NugetApiKey
 )
 
-#Set-StrictMode -Version Latest
+# Enforce strict mode for better scripting practices
+Set-StrictMode -Version Latest
 
 # Synopsis: Default task
 task . Clean, Build
