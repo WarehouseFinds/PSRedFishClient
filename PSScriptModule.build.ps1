@@ -34,7 +34,7 @@ task . Clean, Build
 # Install build dependencies
 Enter-Build {
     # Setting build script variables
-    $script:moduleName = 'PSRedfishClient'
+    $script:moduleName = 'PSScriptModule'
     $script:moduleSourcePath = Join-Path -Path $BuildRoot -ChildPath 'src'
     $script:moduleManifestPath = Join-Path -Path $moduleSourcePath -ChildPath "$moduleName.psd1"
     $script:testSourcePath = Join-Path -Path $BuildRoot -ChildPath 'tests'
