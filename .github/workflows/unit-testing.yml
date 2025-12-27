@@ -5,7 +5,7 @@ on:
     branches: [ main, master ]
 
 jobs:
-  build:
+  unit:
     permissions:
       issues: write
       pull-requests: write
@@ -26,12 +26,6 @@ jobs:
           Set-StrictMode -Version Latest
           Install-Module -Name 'PSDepend' -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop
           Invoke-PSDepend -Force -Path "./requirements.psd1"
-
-      - name: Run build via Invoke-Build
-        shell: pwsh
-        run: |
-          Set-StrictMode -Version Latest
-          Invoke-Build -ReleaseType Debug
 
       - name: Run Unit Tests via Invoke-Build
         shell: pwsh

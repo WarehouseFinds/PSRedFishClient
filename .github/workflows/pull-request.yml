@@ -24,7 +24,6 @@ jobs:
         shell: pwsh
         run: |
           Set-StrictMode -Version Latest
-          Write-Host 'Installing required modules to CurrentUser scope if missing...'
           Install-Module -Name 'PSDepend' -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop
           Invoke-PSDepend -Force -Path "./requirements.psd1"
 

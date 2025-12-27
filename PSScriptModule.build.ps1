@@ -84,7 +84,7 @@ task Analyze {
 # Synopsis: Run Pester tests Unit tests and generate code coverage report
 task UnitTest {
     #$files = Get-ChildItem -Path $moduleSourcePath -Recurse -Force -Include '*.ps1' -Exclude '*.Tests.ps1', '*build.ps1'
-    $unitContainer = New-PesterContainer -Path $Script:testSourcePath -Data @{ SourcePath = $script:moduleSourcePath }
+    $unitContainer = New-PesterContainer -Path $Script:unitTestSourcePath -Data @{ SourcePath = $script:moduleSourcePath }
     $unitConfig = New-PesterConfiguration @{
         Run          = @{
             Container = $unitContainer
