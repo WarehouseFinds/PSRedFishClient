@@ -53,7 +53,7 @@ jobs:
 
       - name: Publish Code Coverage Results
         uses: EnricoMi/publish-unit-test-result-action@v2
-        if: (!cancelled())
+        if: (!cancelled()) || (github.event_name == 'pull_request')
         with:
           check_run: false
           comment_mode: changes
