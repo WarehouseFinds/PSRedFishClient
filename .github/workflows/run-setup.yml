@@ -1,12 +1,11 @@
-name: Setup Prerequisites
-
+name: Setup project dependencies
 on:
   workflow_call:
 permissions: read-all
 
 jobs:
   build:
-    name: Setup
+    name: Setup project dependencies
     runs-on: [ubuntu-latest]
 
     steps:
@@ -48,6 +47,8 @@ jobs:
               if ($module.Version -ne 'latest') {
                   $entry = $entry + ":$($module.Version)"
               }
+              else {
+                  $entry = $entry + "::"
               if ($count -lt $moduleCount) {
                   $entry = $entry + ","
               }
