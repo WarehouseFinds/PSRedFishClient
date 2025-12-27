@@ -57,7 +57,7 @@ jobs:
           "ModuleList=$moduleList" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
       - name: Install and cache PowerShell modules
-        uses: potatoqualitee/psmodulecache@v6.0
+        uses: potatoqualitee/psmodulecache@v6.2.1
         with:
           modules-to-cache: ${{ steps.dependency-setup.outputs.ModuleList }}
           updatable: true
