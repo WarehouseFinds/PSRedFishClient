@@ -37,25 +37,25 @@ jobs:
         id: resolve-dependencies
         shell: pwsh
         run: |
-          # Load module requirements
-          $moduleRequirements = Import-PowerShellDataFile -Path './requirements.psd1'
-          $moduleList = $moduleRequirements.Packages |
-              ForEach-Object {
-                  $name = if ($_.Repository) {
-                      "$($_.Repository)\$($_.Name)"
-                  }
-                  else {
-                      $_.Name
-                  }
+          $packages = @($moduleRequirements.Packages)
+          $moduleList = (
+              $packages |
+                  ForEach-Object {
+                      $name = if ($_.Repository) {
+                          "$($_.Repository)\$($_.Name)"
+                      }
+                      else {
+                          $_.Name
+                      }
 
-                  if ($_.Version -ne 'latest') {
-                      "$($name):$($_.Version)"
+                      if ($_.Version -ne 'latest') {
+                          "$name:$($_.Version)"
+                      }
+                      else {
+                          "$name::"
+                      }
                   }
-                  else {
-                      "$($name)::"
-                  }
-              } |
-              -join ','
+          ) -join ','
           "module-list=$moduleList" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
       - name: Install and cache PowerShell modules
