@@ -3,6 +3,11 @@ run-name: CI Unit Tests • ${{ github.event_name }} • ${{ github.ref_name }}
 
 on:
   workflow_call:
+    inputs:
+      module-list:
+        description: 'Comma-separated list of PowerShell modules to install and cache'
+        required: true
+        type: string
 
 jobs:
   unit:
@@ -20,12 +25,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Ensure PowerShell modules are installed
-        shell: pwsh
-        run: |
-          Set-StrictMode -Version Latest
-          Install-Module -Name 'PSDepend' -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop
-          Invoke-PSDepend -Force -Path "./requirements.psd1"
+      - name: Install and cache PowerShell modules
+        uses: potatoqualitee/psmodulecache@v6.2.1
+        with:
+          modules-to-cache: ${{needs.setup.outputs.ModuleList}}  
+          updatable: true
 
       - name: Run Unit Tests via Invoke-Build
         shell: pwsh

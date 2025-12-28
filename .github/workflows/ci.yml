@@ -27,5 +27,13 @@ on:
 
 jobs:
   setup:
+    name: Setup
     uses: ./.github/workflows/run-setup.yml
-  
+
+
+  unit-tests:
+    name: Unit Tests
+    needs: [setup]
+    uses: ./.github/workflows/run-codequality-unit-tests.yml
+    with:
+      module-list: ${{ needs.setup.outputs.module-list }}
