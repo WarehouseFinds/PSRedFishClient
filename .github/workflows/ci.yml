@@ -58,7 +58,9 @@ jobs:
     uses: ./.github/workflows/run-codequality-semantic-code-analysis.yml
     permissions:
       security-events: write
-
+      actions: read
+      contents: read
+      packages: read
   build:
     name: Build
     needs: [setup]
