@@ -3,16 +3,15 @@
     Justification = 'Suppress false positives in Pester code blocks')]
 param()
 
-Set-StrictMode -Version Latest
 
 Describe 'Injection Hunter security checks' {
 
     BeforeAll {
-        $injectionHunterPath = (Get-Module InjectionHunter -ListAvailable).Path
+        $injectionHunterPath = ((Get-Module InjectionHunter -ListAvailable).Path | Split-Path)
     }
     BeforeDiscovery {
         $modulePath = Resolve-Path (Join-Path $PSScriptRoot '..\..\src')
-        $files = Get-ChildItem -Path $modulePath -Include '*.ps*1' -Exclude '*.Tests.*'
+        $files = Get-ChildItem -Path $modulePath -Recurse -Include '*.ps*1' -Exclude '*.Tests.*'
     }
 
     It '<_.BaseName> contains no Injection Hunter violations' -ForEach $files {
