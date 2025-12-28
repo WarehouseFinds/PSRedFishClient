@@ -12,7 +12,7 @@ Describe 'Injection Hunter security checks' {
     }
     BeforeDiscovery {
         $modulePath = Resolve-Path (Join-Path $PSScriptRoot '..\..\src')
-        $files = Get-ChildItem -Path $modulePath Inlcude '*.ps*1' -Exclude '*.Tests.*'
+        $files = Get-ChildItem -Path $modulePath -Include '*.ps*1' -Exclude '*.Tests.*'
     }
 
     It '<_.BaseName> contains no Injection Hunter violations' -ForEach $files {
