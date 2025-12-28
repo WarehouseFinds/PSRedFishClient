@@ -82,6 +82,6 @@ jobs:
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
-          tag_title=$(${{ github.event.workflow_run.head_commit.message }} | sed -n '2p')
-          git tag -a v${{ steps.version_step.outputs.GitVersion_MajorMinorPatch }} -m "$tag_title"
+          title=$(git log -1 --pretty=%B | sed -n '2p')
+          git tag -a v${{ steps.version_step.outputs.GitVersion_MajorMinorPatch }} -m "$title"
           git push origin tag v${{ steps.version_step.outputs.GitVersion_MajorMinorPatch }}
