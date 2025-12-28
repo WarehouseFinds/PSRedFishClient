@@ -28,7 +28,7 @@ jobs:
       - name: Install and cache PowerShell modules
         uses: potatoqualitee/psmodulecache@v6.2.1
         with:
-          modules-to-cache: ${{needs.setup.outputs.ModuleList}}  
+          modules-to-cache: ${{ inputs['module-list'] }}  
           updatable: true
 
       - name: Run Unit Tests via Invoke-Build
