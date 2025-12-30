@@ -63,12 +63,11 @@ jobs:
           [void] (Invoke-Build @requestParam)
 
       - name: Run Export-CommandHelp via Invoke-Build
-        if: github.ref_name == 'main'
         shell: pwsh
         run: |
           # PlatyPS 1.0.1+ is not compatible with Set-StrictMode
           # New-MarkdownCommandHelp fails with:
-          #  The property 'inputTypes' cannot be found on this object. Verify that the property exists.
+          #  > The property 'inputTypes' cannot be found on this object. Verify that the property exists.
           Set-StrictMode -off
           [void] (Import-Module InvokeBuild)
           $requestParam = @{
@@ -85,9 +84,9 @@ jobs:
           if-no-files-found: warn
 
       - name: Commit generated help
-        if: github.ref_name == 'main'
         shell: bash
         run: |
+          git status
           if git diff --quiet; then
             echo "No help changes to commit"
             exit 0
@@ -100,7 +99,6 @@ jobs:
           git commit -m "Update PowerShell help for release v${{ steps.version_step.outputs.GitVersion_MajorMinorPatch }}"
 
       - name: Push help updates
-        if: github.ref_name == 'main'
         shell: bash
         run: |
           git push origin HEAD:main
