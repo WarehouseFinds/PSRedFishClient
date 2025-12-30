@@ -24,7 +24,7 @@ on:
         description: 'Semantic version determined by GitVersion'
         value: ${{ jobs.build.outputs.semantic-version }}
     secrets:
-      nugetapikey:
+      NUGETAPIKEY_PSGALLERY:
         description: 'NuGet API Key for publishing to PSGallery'
 
 jobs:
@@ -150,8 +150,8 @@ jobs:
         if: inputs.publish == true && inputs['release-type'] == 'Release' && github.ref_name == 'main'
         shell: pwsh
         env:
-          nugetapikey: ${{ secrets.nugetapikey }}
+          NUGETAPIKEY_PSGALLERY: ${{ secrets.NUGETAPIKEY_PSGALLERY }}
         run: |
           Set-StrictMode -Version Latest
           [void] (Import-Module InvokeBuild)
-          Invoke-Build -NugetApiKey ${{ env.nugetapikey }} -Task Publish
+          Invoke-Build -NugetApiKey ${{ env.NUGETAPIKEY_PSGALLERY }} -Task Publish
