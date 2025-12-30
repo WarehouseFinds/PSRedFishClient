@@ -42,7 +42,19 @@ jobs:
       - name: Checkout specific tag (if provided)
         if: inputs.tag-version != ''
         run: |
-          git checkout v${{ inputs.tag-version }}
+          TAG_NAME="v${{ inputs.tag-version }}"
+          echo "Checking out tag: $TAG_NAME"
+
+          # Check if tag exists
+          if ! git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
+            echo "Error: Tag $TAG_NAME does not exist"
+            echo "Available tags:"
+            git tag -l | tail -10
+            exit 1
+          fi
+
+          git checkout "$TAG_NAME"
+          echo "Successfully checked out tag: $TAG_NAME"
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v4.2.0
