@@ -59,7 +59,7 @@ jobs:
       - name: Install and cache PowerShell modules
         uses: potatoqualitee/psmodulecache@v6.2.1
         with:
-          modules-to-cache: ${{ inputs['module-list'] }}  
+          modules-to-cache: ${{ inputs['module-list'] }}
           shell: pwsh
           updatable: false
 
