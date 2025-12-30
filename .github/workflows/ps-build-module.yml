@@ -120,7 +120,7 @@ jobs:
 
       - name: Publish build package to PSGallery
         # Change 'namerno' to the desired event name to enable publishing
-        if: inputs.Publish == 'true' && inputs.ReleaseType == 'Release'
+        if: inputs.publish == true && inputs['release-type'] == 'Release'
         shell: pwsh
         env:
           NuGetApiKey: ${{ secrets.NuGetApiKey_PSGallery }}
