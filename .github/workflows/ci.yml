@@ -15,6 +15,11 @@ on:
           - Prerelease
           - Debug
 
+      tag-version:
+        description: 'Tag version to use (e.g., 0.9.7 or v0.9.7) - leave empty to use current commit'
+        required: false
+        type: string
+
       publish:
         description: 'Publish release to PSGallery (Release only)'
         required: false
@@ -78,7 +83,7 @@ jobs:
       actions: read
       contents: read
       packages: read
-  
+
   build:
     name: Build
     needs: [setup, unit-tests, static-code-analysis]
@@ -87,5 +92,6 @@ jobs:
       contents: write
     with:
       release-type: ${{ inputs.release-type || 'Release' }}
+      tag-version: ${{ inputs.tag-version || '' }}
       publish: ${{ inputs.publish || false }}
       module-list: ${{ needs.setup.outputs.module-list }}

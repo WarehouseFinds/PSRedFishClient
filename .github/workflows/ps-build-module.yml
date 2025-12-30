@@ -6,6 +6,10 @@ on:
         description: 'Release Type [Release/Prerelease/Debug]'
         required: false
         type: string
+      tag-version:
+        description: 'Tag version to use (e.g., 0.9.7 or v0.9.7) - leave empty to use current commit'
+        required: false
+        type: string
       publish:
         description: 'Publish release to PSGallery (Release only)'
         required: false
@@ -35,6 +39,26 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Checkout specific tag (if provided)
+        if: inputs.tag-version != ''
+        run: |
+          # Handle tag name - remove 'v' prefix if provided by user
+          TAG_VERSION="${{ inputs.tag-version }}"
+          TAG_VERSION="${TAG_VERSION#v}"  # Remove 'v' prefix if present
+          TAG_NAME="v${TAG_VERSION}"
+          echo "Checking out tag: $TAG_NAME"
+
+          # Check if tag exists
+          if ! git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
+            echo "Error: Tag $TAG_NAME does not exist"
+            echo "Available tags (most recent first):"
+            git tag -l 'v*' --sort=-version:refname | head -10
+            exit 1
+          fi
+
+          git checkout "$TAG_NAME"
+          echo "Successfully checked out tag: $TAG_NAME"
+
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v4.2.0
         with:
@@ -50,7 +74,7 @@ jobs:
       - name: Install and cache PowerShell modules
         uses: potatoqualitee/psmodulecache@v6.2.1
         with:
-          modules-to-cache: ${{ inputs['module-list'] }}  
+          modules-to-cache: ${{ inputs['module-list'] }}
           shell: pwsh
           updatable: false
 
@@ -89,14 +113,15 @@ jobs:
 
       # Create a new tag based on the version determined by GitVersion
       # This is done BEFORE committing help to ensure the tag points to the verified PR merge commit
+      # Only create tags on push events, not on workflow_dispatch
       - name: Create release tag
-        if: github.ref_name == 'main'
+        if: github.ref_name == 'main' && github.event_name == 'push'
         run: |
           git tag v${{ steps.version_step.outputs.GitVersion_MajorMinorPatch }}
           git push origin tag v${{ steps.version_step.outputs.GitVersion_MajorMinorPatch }}
 
       - name: Commit generated help
-        if: github.ref_name == 'main'
+        if: github.ref_name == 'main' && github.event_name == 'push'
         shell: bash
         run: |
           git status
@@ -113,7 +138,7 @@ jobs:
           git commit -m "Update PowerShell help for release v${{ steps.version_step.outputs.GitVersion_MajorMinorPatch }}"
 
       - name: Push help updates
-        if: github.ref_name == 'main'
+        if: github.ref_name == 'main' && github.event_name == 'push'
         shell: bash
         run: |
           git push origin HEAD:main
