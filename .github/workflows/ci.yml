@@ -16,7 +16,7 @@ on:
           - Debug
 
       tag-version:
-        description: 'Tag version to use (e.g., 0.9.7) - leave empty to use current commit'
+        description: 'Tag version to use (e.g., 0.9.7 or v0.9.7) - leave empty to use current commit'
         required: false
         type: string
 

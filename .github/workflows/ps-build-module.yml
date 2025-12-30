@@ -7,7 +7,7 @@ on:
         required: false
         type: string
       tag-version:
-        description: 'Tag version to use (e.g., 0.9.7) - leave empty to use current commit'
+        description: 'Tag version to use (e.g., 0.9.7 or v0.9.7) - leave empty to use current commit'
         required: false
         type: string
       publish:
@@ -42,14 +42,17 @@ jobs:
       - name: Checkout specific tag (if provided)
         if: inputs.tag-version != ''
         run: |
-          TAG_NAME="v${{ inputs.tag-version }}"
+          # Handle tag name - remove 'v' prefix if provided by user
+          TAG_VERSION="${{ inputs.tag-version }}"
+          TAG_VERSION="${TAG_VERSION#v}"  # Remove 'v' prefix if present
+          TAG_NAME="v${TAG_VERSION}"
           echo "Checking out tag: $TAG_NAME"
 
           # Check if tag exists
           if ! git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
             echo "Error: Tag $TAG_NAME does not exist"
-            echo "Available tags:"
-            git tag -l | tail -10
+            echo "Available tags (most recent first):"
+            git tag -l 'v*' --sort=-version:refname | head -10
             exit 1
           fi
 
