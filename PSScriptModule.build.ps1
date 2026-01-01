@@ -12,11 +12,6 @@
     Justification = 'Suppress false positives in Invoke-Build tasks')]
 param (
     [Parameter()]
-    [ValidateSet('Debug', 'Release', 'Prerelease')]
-    [String]
-    $ReleaseType = 'Debug',
-
-    [Parameter()]
     [ValidateNotNullOrEmpty()]
     [String]
     $SemanticVersion,
@@ -174,28 +169,12 @@ task Build Clean, {
     }
     [void] (Get-ChildItem @requestParam | Remove-Item -Force)
 
-    # Add pre-release tag if needed
-    switch ($ReleaseType) {
-        'Release' {
-            # e.g. 1.2.4-5  ->  1.2.4
-            $semVer = $SemanticVersion.Split('-', 2)[0]
-        }
-        'Prerelease' {
-            # e.g. 1.2.4-5  ->  1.2.4-Prerelease-5
-            $semVer = $SemanticVersion.Split('-', 2)[0] + '-Prerelease' + $SemanticVersion.Split('-', 2)[1]
-        }
-        'Debug' {
-            # 1.2.4-PullRequest1234 -> 1.2.4-PullRequest1234
-            $semVer = $SemanticVersion
-        }
-    }
-
     # Build Powershell module
     [void] (Import-Module ModuleBuilder)
     $requestParam = @{
         Path                       = (Join-Path -Path $buildPath -ChildPath "src/$moduleName.psd1")
         OutputDirectory            = (Join-Path -Path $buildPath -ChildPath "out/$moduleName")
-        SemVer                     = $semVer
+        SemVer                     = $SemanticVersion
         UnversionedOutputDirectory = $true
         ErrorAction                = 'Stop'
     }
