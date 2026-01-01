@@ -89,6 +89,7 @@ jobs:
 
       - name: Run Export-CommandHelp via Invoke-Build
         shell: pwsh
+        if: steps.releasetype_step.outputs.ReleaseType != 'Debug'
         run: |
           # PlatyPS 1.0.1+ is not compatible with Set-StrictMode
           # New-MarkdownCommandHelp fails with:
@@ -103,6 +104,7 @@ jobs:
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f #v6
+        if: (!cancelled())
         with:
           name: build-${{ steps.version_step.outputs.semVer }}
           path: build/**
