@@ -150,7 +150,7 @@ jobs:
           $result = Invoke-RestMethod @requestParams
 
           Write-Output  'Release Notes for v${{ env.majorMinorPatch }}<<EOF' >> $env:GITHUB_OUTPUT
-          Write-Output  $result.body >> $env:GITHUB_OUTPUT
+          Write-Output  "$($result.body)" >> $env:GITHUB_OUTPUT
           Write-Output  'EOF' >> $env:GITHUB_OUTPUT
 
       - name: Create Release
