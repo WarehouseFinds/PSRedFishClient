@@ -150,7 +150,9 @@ jobs:
           }
           $result = Invoke-RestMethod @requestParams
           $body = @"
+          notes<<EOF
           $($result.body)
+          "EOF"
           "@
           Write-Verbose $previousTag
           Write-Verbose $body
