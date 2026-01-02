@@ -33,7 +33,6 @@ jobs:
           repository: ${{ github.repository }}
           ref: ${{ inputs['version-tag'] || '' }}
           fetch-depth: 0
-          fetch-tags: true
 
       - name: Install GitVersion 6.5.1
         uses: gittools/actions/gitversion/setup@d0139503a9321f76b4a417dfdc8aebcec24decdd #v4.2.0
