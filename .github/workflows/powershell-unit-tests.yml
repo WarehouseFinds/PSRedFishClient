@@ -58,13 +58,13 @@ jobs:
         uses: danielpalme/ReportGenerator-GitHub-Action@5.5.1
         with:
           reports: 'test-results/codecoverage/code-coverage.xml'
-          targetdir: 'test-results/codecoverage/report' # REQUIRED # The directory where the generated report should be saved.
-          reporttypes: 'HtmlInline;MarkdownSummaryGithub' # The output formats and scope (separated by semicolon) Values: Badges, Clover, Cobertura, OpenCover, CsvSummary, Html, Html_Dark, Html_Light, Html_BlueRed, HtmlChart, HtmlInline, HtmlInline_AzurePipelines, HtmlInline_AzurePipelines_Dark, HtmlInline_AzurePipelines_Light, HtmlSummary, Html_BlueRed_Summary, JsonSummary, CodeClimate, Latex, LatexSummary, lcov, Markdown, MarkdownSummary, MarkdownAssembliesSummary, MarkdownSummaryGithub, MarkdownDeltaSummary, MHtml, SvgChart, SonarQube, TeamCitySummary, TextSummary, TextDeltaSummary, Xml, XmlSummary
-          sourcedirs: '' # Optional directories which contain the corresponding source code (separated by semicolon). The source directories are used if coverage report contains classes without path information.
+          targetdir: 'test-results/codecoverage/report'
+          reporttypes: 'HtmlInline;MarkdownSummaryGithub'
+          sourcedirs: 'src'
           verbosity: 'Info'
-          title: '' # Optional title.
-          tag: '${{ github.run_number }}_${{ github.run_id }}' # Optional tag or build version.
-          toolpath: 'reportgeneratortool' # Default directory for installing the dotnet tool.
+          title: 'Code Coverage Report'
+          tag: '${{ github.ref_name }}_${{ github.sha }}'
+          toolpath: 'reportgeneratortool'
 
       - name: Upload coverage report artifact
         uses: actions/upload-artifact@v4
