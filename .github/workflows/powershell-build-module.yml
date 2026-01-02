@@ -126,6 +126,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           $VerbosePreference = 'Continue'
+          git fetch --tags
           $uri = "https://api.github.com/repos/${{ github.repository }}/releases/generate-notes"
 
           $body = @{
