@@ -148,6 +148,7 @@ jobs:
             Body        = $body
             ContentType = 'application/json'
           }
+          $result = Invoke-RestMethod @requestParams
           $body = @"
           $($result.body)
           "@
