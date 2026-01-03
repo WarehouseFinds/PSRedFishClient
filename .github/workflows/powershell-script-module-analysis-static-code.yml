@@ -1,4 +1,4 @@
-name: '[reusable] PS - Static Code Analysis'
+name: '[template] PS - Static Code Analysis'
 on:
   workflow_call:
     inputs:
