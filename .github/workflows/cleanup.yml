@@ -1,4 +1,4 @@
-name: Cron • Cleanup past workflow runs
+name: Cleanup
 run-name: Cleanup • ${{ github.repository }} • ${{ github.event_name }}
 on:
   schedule:
