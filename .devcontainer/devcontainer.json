@@ -7,8 +7,10 @@
     // Use 'features' to install additional components in the container.
     "features": {
         "ghcr.io/devcontainers/features/common-utils:2": {
+            "upgradePackages": "true",
             "username": "vscode",
-            "upgradePackages": "true"
+            "userGid": "1001",
+            "userUid": "1001"
         },
         "ghcr.io/devcontainers/features/powershell:1": {
             "version": "latest"
@@ -17,8 +19,6 @@
             "version": "latest"
         }
     },
-
-    // "postCreateCommand": "sudo chsh vscode -s \"$(which pwsh)\"",
 
     // Configure tool-specific properties.
     "customizations": {
@@ -70,8 +70,8 @@
         }
     },
 
-    // Run after container is created (one time only)
-    "postCreateCommand": "pwsh -NoProfile -Command 'Write-Host \"Container created. Installing dependencies...\"'",
+    // Run once when the container is created
+    "onCreateCommand": "pwsh -NoProfile -Command 'Install-PSResource -RequiredResourceFile /workspaces/PSScriptModule/requirements.json -AcceptLicense -TrustRepository -Verbose'",
 
     // Run after container starts (each time)
     "postStartCommand": "pwsh -NoProfile -Command 'Write-Host \"Container started.\"'",
