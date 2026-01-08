@@ -30,7 +30,7 @@ jobs:
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
-          delete_workflow_pattern: ci.yml
+          delete_workflow_pattern: ci
           retain_days: ${{ github.event.inputs.retain-days || 2 }}
           keep_minimum_runs: ${{ github.event.inputs.minimum-runs || 2 }}
           check_pullrequest_exist: true
@@ -40,7 +40,7 @@ jobs:
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
-          delete_workflow_pattern: release.yml
+          delete_workflow_pattern: release
           retain_days: ${{ github.event.inputs.retain-days || 2 }}
           keep_minimum_runs: ${{ github.event.inputs.minimum-runs || 2 }}
           check_pullrequest_exist: true
@@ -50,7 +50,7 @@ jobs:
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
-          delete_workflow_pattern: cleanup.yml
+          delete_workflow_pattern: cleanup
           retain_days: ${{ github.event.inputs.retain-days || 1 }}
           keep_minimum_runs: ${{ github.event.inputs.minimum-runs || 1 }}
 
