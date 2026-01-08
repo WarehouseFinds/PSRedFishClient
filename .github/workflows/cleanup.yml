@@ -6,11 +6,6 @@ on:
     - cron: '0 0  * * *'
   workflow_dispatch:
     inputs:
-      retain-days:
-        description: 'Number of days to retain workflow runs'
-        required: false
-        type: number
-        default: 2
       minimum-runs:
         description: 'Minimum number of recent workflow runs to retain'
         required: false
@@ -30,5 +25,5 @@ jobs:
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
-          keep_minimum_runs: ${{ github.event.inputs.minimum-runs || 2 }}
+          keep_minimum_runs: ${{ github.event.inputs.minimum-runs || 5 }}
           check_pullrequest_exist: true
