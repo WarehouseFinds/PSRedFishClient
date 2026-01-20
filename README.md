@@ -16,9 +16,9 @@ you can clone this repository and start writing your module's business logic imm
 
 **Perfect for:**
 
-- 📦 Open-source PowerShell projects
-- 🔧 DevOps automation tools
-- 🎓 Learning PowerShell module development best practices
+- Open-source PowerShell projects
+- Rapid prototyping of PowerShell modules
+- Learning PowerShell module development best practices
 
 ## 🎬 How to Use This Template
 
@@ -27,46 +27,34 @@ you can clone this repository and start writing your module's business logic imm
 1. Wait **about 20 seconds** for the automated bootstrap workflow to complete
 1. **Refresh the page** to see your customized repository
 
-The bootstrap process will:
-
-- Rename all files and references from `PSScriptModule` to your module name
-- Update the module manifest with your description
-- Remove template-specific files
-- Initialize your module's structure
-
 [![](https://img.shields.io/badge/Use%20Powershell%20Template-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)](https://github.com/new?template_owner=WarehouseFinds&template_name=PSScriptModule&owner=%40me&name=MyProject&description=PS%20Module%20Template&visibility=public)
 
+## 📦 Features
 
-## � What You Get Out of the Box
-
-When you create a module from this template, you immediately have:
+When you create a module from this template, you immediately get:
 
 ✅ **CI/CD Ready**
 
-- GitHub Actions workflows for CI, release, and publishing
+- GitHub Actions workflows for CI, release, publishing and more
 - Dependency management and caching
-- Code quality gates that must pass before merging
-- GitHub release and changelog generation based on merged PRs
+- Compatibility testing on Windows, Linux, and macOS
+- Automated publishing to PowerShell Gallery and NuGet.org
 
 ✅ **Development Environment**
 
-- VS Code workspace configuration
+- VS Code configuration (settings, recommended extensions)
 - Build tasks pre-configured
-- Devcontainer support for consistent environments
+- Run and debug configurations
+- Devcontainer support for preconfigured sandboxed environments
 
 ✅ **Version Management**
 
 - GitVersion for semantic versioning
 - GitHub Flow (v1) release workflow
 - Commit-based version bumps with `+semver:` keywords
-- Automated module manifest version updates
+- Changelog generation based on merged PRs
 
-✅ **Release Management**
-
-- GitHub Releases with changelog generation
-- Automated publishing to PowerShell Gallery
-
-✅ **Complete Testing Infrastructure**
+✅ **Code Quality and Testing**
 
 - Pester test framework for unit tests
 - Code coverage reporting
@@ -164,22 +152,13 @@ After setup, customize your module:
 
    > **Note**: Do not change `ModuleVersion`, `RootModule` and `FunctionsToExport`  - it is managed automatically
 
-1. **Update Documentation**:
-   - Customize this README.md
-   - Update [CONTRIBUTING.md](CONTRIBUTING.md) with your contribution guidelines
-   - Review and update documentation in `/docs` folder
-
-1. **Configure Publishing** (optional):
-   - Register on [PowerShell Gallery](https://www.powershellgallery.com/) and create an API key
-   - Add PowerShell Gallery API key in repository secrets
-   - Review `.github/workflows/release.yml` for publishing settings
-
 1. **Start Developing**:
    - Add functions to `src/Public/` (exported) or `src/Private/` (internal)
    - Create corresponding `.Tests.ps1` files
 
 1. **Push your changes** and open a pull request to trigger CI/CD workflows
 
+## Documentation
 
 See the [documentation guides](docs/) for detailed information on:
 
@@ -190,53 +169,21 @@ See the [documentation guides](docs/) for detailed information on:
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) guide for:
+We welcome contributions! Please see our [CONTRIBUTING](CONTRIBUTING.md) guide for:
 
-- How to report issues
 - Pull request process
 - Code style guidelines
 - Testing requirements
 
-## 📋 Dependencies
+## Like this project?
 
-This template uses the following PowerShell modules:
+If you find this template useful, please consider supporting it by:
 
-| Module | Version | Purpose |
-| --------- | ---------------- | --------- |
-| **InvokeBuild** | 5.14.22 | Build orchestration |
-| **ModuleBuilder** | 3.1.8 | Module compilation |
-| **Pester** | 5.7.1 | Testing framework |
-| **PSScriptAnalyzer** | 1.24.0 | Static code analysis |
-| **InjectionHunter** | 1.0.0 | Security vulnerability scanning |
-| **Microsoft.PowerShell.PlatyPS** | 1.0.1 | Help documentation generation |
-
-All dependencies are managed through `requirements.psd1` and can be installed with PSDepend.
-
-## 📝 License
-
-This project is licensed under the terms specified in the [LICENSE](LICENSE) file.
-
-## 🎓 Learning Resources
-
-- [PowerShell Best Practices](https://docs.microsoft.com/en-us/powershell/scripting/developer/cmdlet/cmdlet-development-guidelines)
-- [Pester Documentation](https://pester.dev/)
-- [PSScriptAnalyzer Rules](https://github.com/PowerShell/PSScriptAnalyzer)
-- [Semantic Versioning](https://semver.org/)
-- [GitHub Flow](https://guides.github.com/introduction/flow/)
-
-## 🆘 Support
-
-- 📖 Check the [CONTRIBUTING.md](CONTRIBUTING.md) guide
-- 📚 Browse the [documentation](docs/) for detailed guides
-- 🐛 [Report issues](https://github.com/WarehouseFinds/PSScriptModule/issues)
-- 💬 [Start a discussion](https://github.com/WarehouseFinds/PSScriptModule/discussions)
+- **Star this repository** if you find it useful
+- **Share it** with other PowerShell developers
+- **Provide feedback** via issues or discussions
+- **Sponsor development** via GitHub Sponsors
 
 ---
 
-## 🚀 Ready to Start?
-
-1. **[Create your module from this template →](https://github.com/new?template_owner=WarehouseFinds&template_name=PSScriptModule)**
-1. **Star this repository** if you find it useful
-1. **Share it** with other PowerShell developers
-
-**Built with ❤️ by [Warehouse Finds](https://github.com/WarehouseFinds)**
+Built with ❤️ by [Warehouse Finds](https://github.com/WarehouseFinds)
