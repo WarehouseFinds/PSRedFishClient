@@ -140,8 +140,12 @@ Edit `src/YourModuleName.psd1`:
     }
     
     # Set your project URLs
-    ProjectUri = 'https://github.com/YourUsername/YourModuleName'
-    LicenseUri = 'https://github.com/YourUsername/YourModuleName/blob/main/LICENSE'
+    PrivateData = @{
+        PSData = @{
+            ProjectUri = 'https://github.com/YourUsername/YourModuleName'
+            LicenseUri = 'https://github.com/YourUsername/YourModuleName/blob/main/LICENSE'
+        }
+    }
     
     # Module version (auto-updated by GitVersion)
     ModuleVersion = '0.1.0'
