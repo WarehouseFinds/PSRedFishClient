@@ -126,6 +126,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          repository: ${{ github.repository }}
+          fetch-depth: 0
       - name: Build Module
         id: build
         uses: ./.github/actions/ps-build
