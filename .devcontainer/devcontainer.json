@@ -71,7 +71,7 @@
     },
 
     // Run once when the container is created
-    "onCreateCommand": "pwsh -NoProfile -Command 'Install-PSResource -RequiredResourceFile /workspaces/PSScriptModule/requirements.json -AcceptLicense -TrustRepository -Verbose'",
+    "onCreateCommand": "pwsh -NoProfile -Command 'Install-PSResource -RequiredResourceFile /workspaces/PSScriptModule/requirements.psd1 -AcceptLicense -TrustRepository -Verbose'",
 
     // Run after container starts (each time)
     "postStartCommand": "pwsh -NoProfile -Command 'Write-Host \"Container started.\"'",
