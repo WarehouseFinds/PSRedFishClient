@@ -1,4 +1,4 @@
-name: Boostrap once on new repository
+name: Boostrap repository
 run-name: "${{ github.event.repository.name }} | Bootstrap | ${{ github.run_id }} | ${{ github.event_name }}"
 
 # This step triggers after the learner creates a new repository from the template.
@@ -55,16 +55,28 @@ jobs:
     needs: get_repo_state
 
     # We will only run this action when:
-    # 1. This repository isn't the template repository.
-    # 2. The step is currently 0.
-    # Reference: https://docs.github.com/en/actions/learn-github-actions/contexts
-    # Reference: https://docs.github.com/en/actions/learn-github-actions/expressions
+    # The repository isn't the template repository.
     if: >-
       ${{ !github.event.repository.is_template
           && needs.get_repo_state.outputs.current_state == 'BOOTSTRAP_NEW_REPO'}}
 
-    # We'll run Ubuntu for performance instead of Mac or Windows.
     runs-on: ubuntu-latest
+    env:
+      LABELS_JSON: |
+        [
+          {"name": "dependencies", "color": "ededed", "description": "Dependency updates"},
+          {"name": "documentation", "color": "0075ca", "description": "Improvements or additions to documentation"},
+          {"name": "tests", "color": "d876e3", "description": "Related to tests"},
+          {"name": "devcontainer", "color": "0e8a16", "description": "Related to development container"},
+          {"name": "vscode", "color": "1d76db", "description": "Related to Visual Studio Code settings"},
+          {"name": "ci-cd", "color": "bfdadc", "description": "Related to GitHub Actions CI"},
+          {"name": "build", "color": "5319e7", "description": "Build related changes"},
+          {"name": "github", "color": "6e5494", "description": "GitHub configuration changes"},
+          {"name": "breaking", "color": "ff0000", "description": "Breaking changes"},
+          {"name": "feature", "color": "0e8a16", "description": "New feature or enhancement"},
+          {"name": "bugfix", "color": "d73a4a", "description": "Bug fix"},
+          {"name": "performance", "color": "5319e7", "description": "Performance improvements"}
+        ]
 
     steps:
       # We'll need to check out the repository so that we can edit the README.
@@ -138,7 +150,7 @@ jobs:
 
       - name: Remove this workflow file
         run: |
-          rm .github/workflows/bootstrap-repo.yml
+          rm .github/workflows/github-bootstrap-repo.yml
 
       - name: Commit changes
         run: |
@@ -147,3 +159,29 @@ jobs:
           git add .
           git commit -am "chore: bootstrap repository for ${{ github.event.repository.name }}"
           git push
+
+      - name: Create repository labels
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd #v8.0.0
+        with:
+          script: |
+            const labels = JSON.parse(process.env.LABELS_JSON);
+            for (const label of labels) {
+              try {
+                await github.rest.issues.createLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: label.name,
+                  description: label.description || '',
+                  color: label.color
+                });
+              } catch (error) {
+                // Check if the error is because the label already exists
+                if (error.status === 422) {
+                  console.log(`Label '${label.name}' already exists. Skipping.`);
+                } else {
+                  // Log other errors
+                  console.error(`Error creating label '${label.name}': ${error}`);
+                }
+              }
+            }
+
