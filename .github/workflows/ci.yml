@@ -9,6 +9,9 @@ on:
       - main
     paths:
       - 'src/**'
+      - 'tests/**'
+      - '*.ps1'
+      - '*.psd1'
 
   pull_request:
     branches:
@@ -19,7 +22,8 @@ on:
       - 'src/**'
       - 'tests/**'
       - '.github/**/*'
-      - '*'
+      - '*.ps1'
+      - '*.psd1'
 
 jobs:
   dependencies:
