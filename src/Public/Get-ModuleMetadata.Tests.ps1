@@ -66,7 +66,7 @@ Describe 'Get-ModuleMetadata' {
                     FullName      = './empty'
                 }
             }
-            Mock Get-ChildItem { @() }
+            Mock Get-ChildItem { , @() }
 
             { Get-ModuleMetadata -Path './empty' } | Should -Throw '*No module manifest*'
         }
