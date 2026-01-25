@@ -4,7 +4,7 @@ param()
 BeforeAll {
     # Determine the built module path dynamically
     $moduleName = 'PSScriptModule'
-    $modulePath = Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath '../../build/out' -ChildPath $moduleName)
+    $modulePath = Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath "../../build/out/$moduleName")
     $manifestPath = Join-Path -Path $modulePath -ChildPath "$moduleName.psd1"
 
     # Import the built module

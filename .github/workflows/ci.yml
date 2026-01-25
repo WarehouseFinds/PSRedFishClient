@@ -133,3 +133,5 @@ jobs:
         with:
           release-type: 'Debug'
           module-list: ${{ needs.dependencies.outputs.module-list }}
+      - name: Run Integration Tests
+        uses: ./.github/actions/ps-integration-tests
