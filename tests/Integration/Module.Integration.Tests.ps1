@@ -52,10 +52,8 @@ Describe 'PSScriptModule Integration Tests' -Tag 'Integration' {
 
             # Discover public functions from source
             $publicFunctionsPath = Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath '../../src/Public')
-            if ($publicFunctionsPath -and (Test-Path $publicFunctionsPath)) {
-                $publicFunctionFiles = Get-ChildItem -Path $publicFunctionsPath -Include '*.ps1' -Exclude '*.Tests.ps1' -Recurse |
-                Select-Object -ExpandProperty BaseName
-            }
+            $publicFunctionFiles = Get-ChildItem -Path $publicFunctionsPath -Include '*.ps1' -Exclude '*.Tests.ps1' -Recurse |
+            Select-Object -ExpandProperty BaseName
         }
 
         It 'Should export at least one function' {
