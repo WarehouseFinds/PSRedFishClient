@@ -20,12 +20,16 @@ runs:
         GITHUB_TOKEN: ${{ github.token }}
       run: |
         git fetch --tags
-        $previousTag = (git tag --sort=-v:refname)[0]
+        $tags = @(git tag --sort=-v:refname)
+        $previousTag = if ($tags.Count -gt 0) { $tags[0] } else { $null }
         $uri = "https://api.github.com/repos/${{ github.repository }}/releases/generate-notes"
         $body = @{
           tag_name = "v${{ inputs.release-version }}"
           target_commitish = "main"
-          previous_tag_name = $previousTag
+        }
+        # Only include previous_tag_name if a previous tag exists
+        if ($previousTag) {
+          $body['previous_tag_name'] = $previousTag
         }
         $requestParams = @{
           Method      = 'Post'
