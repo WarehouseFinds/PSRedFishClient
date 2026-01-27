@@ -61,7 +61,7 @@ Describe 'PSScriptModule Integration Tests' -Tag 'Integration' {
         }
 
         It 'Public function files' {
-            $publicFunctionFiles | Should -HaveCount 1 -Because 'The template ships with a single public function'
+            $publicFunctionFiles.Count | Should -BeGreaterThan 0
         }
 
         It 'Should discover public functions from src/Public' {

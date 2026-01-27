@@ -26,6 +26,18 @@ on:
       - '*.psd1'
 
 jobs:
+  changes:
+    name: Label Changes
+    runs-on: [ubuntu-latest]
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+    - name: Labeler
+      id: labeler
+      uses: actions/labeler@634933edcd8ababfe52f92936142cc22ac488b1b #v6.0.1
+      
   dependencies:
     name: Dependencies
     runs-on: ubuntu-latest

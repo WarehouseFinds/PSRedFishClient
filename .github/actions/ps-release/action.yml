@@ -10,6 +10,10 @@ inputs:
   publish-psgallery:
     description: Publish to PowerShell Gallery
     required: true
+secrets:
+  PSGALLERY_API_KEY:
+    description: API Key for PowerShell Gallery
+    required: false
 runs:
   using: composite
   steps:
@@ -20,12 +24,16 @@ runs:
         GITHUB_TOKEN: ${{ github.token }}
       run: |
         git fetch --tags
-        $previousTag = (git tag --sort=-v:refname)[0]
+        $tags = @(git tag --sort=-v:refname)
+        $previousTag = if ($tags.Count -gt 0) { $tags[0] } else { $null }
         $uri = "https://api.github.com/repos/${{ github.repository }}/releases/generate-notes"
         $body = @{
           tag_name = "v${{ inputs.release-version }}"
           target_commitish = "main"
-          previous_tag_name = $previousTag
+        }
+        # Only include previous_tag_name if a previous tag exists
+        if ($previousTag) {
+          $body['previous_tag_name'] = $previousTag
         }
         $requestParams = @{
           Method      = 'Post'
@@ -54,8 +62,6 @@ runs:
     - name: Publish build package to PSGallery
       if: ${{ inputs.publish-psgallery == 'true' && env.PSGALLERY_API_KEY != '' }}
       shell: pwsh
-      env:
-        PSGALLERY_API_KEY: ${{ env.PSGALLERY_API_KEY }}
       run: |
         Set-StrictMode -Version Latest
         [void] (Import-Module InvokeBuild)
